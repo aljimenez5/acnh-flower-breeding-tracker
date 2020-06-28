@@ -1,0 +1,5 @@
+class Square < ApplicationRecord
+
+
+
+end

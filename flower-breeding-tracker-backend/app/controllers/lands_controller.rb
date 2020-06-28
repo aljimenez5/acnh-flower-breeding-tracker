@@ -1,0 +1,4 @@
+class LandsController < ApplicationController
+    
+    
+end

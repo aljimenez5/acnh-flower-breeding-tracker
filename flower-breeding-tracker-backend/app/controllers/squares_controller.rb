@@ -1,0 +1,4 @@
+class SquaresController < ApplicationController
+    
+    
+end

@@ -1,0 +1,5 @@
+class Land < ApplicationRecord
+
+
+
+end
