@@ -20,7 +20,7 @@ class FlowersController < ApplicationController
 
             render json: FlowerSerializer.new(flower)
         else
-            render json: FlowerSerializer.new(flower) {status: 'error', message: "Land already exists"}
+            render json: {status: 'error', message: "Land already exists"}
         end
         
     end
