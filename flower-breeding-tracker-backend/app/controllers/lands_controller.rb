@@ -1,6 +1,6 @@
 class LandsController < ApplicationController
     
-     def index 
+    def index 
         lands = Land.all 
         render json: LandSerializer.new(lands)
     end
