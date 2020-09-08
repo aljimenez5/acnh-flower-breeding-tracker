@@ -1,5 +1,5 @@
 class FlowerSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :name, :status, :color, :origin, :image_url
-  belongs_to :square
+  attributes :name, :color, :origin, :image_url
+
 end
