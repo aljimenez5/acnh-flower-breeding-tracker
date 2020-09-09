@@ -8,8 +8,8 @@
 
 # flower_names = ["Rose", "Lily", "Windflower", "Pansy", "Tulip", "Mum", "Hyacinth", "Cosmo"]
 
-Dir.entries(Pathname('./db/images')).each do |file|
-    
+Dir.entries(Pathname('../flower-breeding-tracker-frontend/src/images')).each do |file|
+    binding.pry
     if file[0] != "."
         file_arr = file.split(/[-_]/)
         
