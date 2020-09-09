@@ -37,3 +37,42 @@ You are encouraged to follow development best practices while you are building y
 - [ ] Aim for a large number of small commits - commit frequently!
 - [ ] Add meaningful messages to your commits. When you look back at your commits with `git log`, the messages should describe each change.
 - [ ] Don't include changes in a commit that aren't related to the commit message
+
+## <a id="what-to-expect-in-your-project-review"></a>What To Expect In Your Project Review
+
+Review the [What to Expect in Project Reviews](https://github.com/learn-co-curriculum/js-spa-project-instructions/blob/master/what-to-expect-in-project-reviews.md) document for general guidance on what to expect in the Project Review.
+
+### What should you be prepared for in Project Review?
+
+During your project review, be prepared to:
+
+1. Explain your code from execution point to exit point. Use the best technical vocabulary you can.
+2. Live code. This could be refactoring, adding a new feature, or both.
+3. Answer questions about your knowledge of _JavaScript Fundamentals_.
+
+In particular, the JavaScript Fundamentals concepts your reviewer may ask about include:
+
+- variables
+- data structures
+- functions
+- hoisting
+- scope
+- context
+- `this`
+- closures
+- ES6 syntax
+- `let`, `const`
+- arrow functions
+
+### Learning Goals
+
+These are the skills and knowledge that you should aim to demonstrate through the project review.
+
+- Explain how Rails routes a request to a controller and method based on the URL and HTTP verb
+- Use `render json:` to render serialized JSON
+- Select, Create, and Modify DOM nodes
+- Attach listeners to DOM nodes to respond to user interaction
+- Use `preventDefault` to control form submit behavior
+- Use `fetch` with 'GET', 'POST', 'PATCH' & 'DELETE' HTTP methods
+- Create a JavaScript object with ES6 class syntax
+- Instantiate JavaScript objects and call methods on them.
