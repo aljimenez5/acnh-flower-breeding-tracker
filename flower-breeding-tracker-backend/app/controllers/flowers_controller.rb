@@ -1,7 +1,7 @@
 class FlowersController < ApplicationController
     
     def index 
-        flowers = Flower.all 
+        flowers = Flower.order('name')
         render json: FlowerSerializer.new(flowers)
     end
 
