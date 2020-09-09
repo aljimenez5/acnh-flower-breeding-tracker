@@ -29,25 +29,23 @@ function getAllFlowers() {
     fetch(FLOWERS_URL, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.forEach( obj => createFlowerCard(obj.attributes)))
 }
 
-function createDiv(name){
+function createDiv(name, className){
     const newDiv = document.createElement("div")
     newDiv.id = name
+    newDiv.className = className
     return newDiv
 }
 
 function createFlowerCard(obj) {
     const flowersDiv = document.getElementById("flowers")
-    const newFlowerCard = createDiv(`${obj.name}-${obj.color}`)
-    const text = document.createElement('p')
-    text.textContent = (`${obj.name} (${obj.color})`)
+    const newFlowerCard = createDiv(`${obj.name}-${obj.color}`, "flower-card")
+    const text = (`${obj.name}`)
     const image = document.createElement("img")
-
     image.src = `./assets/images/${obj.image_url}`
-    image.height = 100
-    image.width = 100
-    newFlowerCard.appendChild(text)
+    image.height = 75
+    image.width = 75
+    newFlowerCard.textContent = text
     newFlowerCard.appendChild(image)
     flowersDiv.appendChild(newFlowerCard)
-    // return newFlowerCard
 }
 
