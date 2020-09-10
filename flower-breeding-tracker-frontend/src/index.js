@@ -4,20 +4,16 @@ const LANDS_URL = `${BACKEND_URL}/lands`
 const SQUARES_URL = `${BACKEND_URL}/squares`
 
 
-
-
-
-// ;
-// fetch(`${BACKEND_URL}/test`)
-//     .then(response => response.json())
-//     .then(parsedResponse => console.log(parsedResponse));
 document.addEventListener('DOMContentLoaded', () => {
-    getAllFlowers()
 
-}
-)
+    
+    getWhiteFlowers()
+    
 
-function getAllFlowers() {
+})
+
+let getFlowersByType = function(flowerType, status="allCards") {
+    
     const requestConfigs = {
         method: 'GET',
         headers: {
@@ -26,26 +22,88 @@ function getAllFlowers() {
         }
     }
 
-    fetch(FLOWERS_URL, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.forEach( obj => createFlowerCard(obj.attributes)))
+    fetch(FLOWERS_URL, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.filter(obj => obj.attributes.name === flowerType && obj.attributes.color !== "White")).then(filteredResponse => filteredResponse.forEach(obj => createFlowerCard(obj.attributes, status)))
 }
 
-function createDiv(name, className){
+let getWhiteFlowers = function(status="onlyWhiteCards") {
+    const requestConfigs = {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    }
+
+    fetch(FLOWERS_URL, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.filter(obj => obj.attributes.color === "White")).then(filteredResponse => filteredResponse.forEach(obj => createFlowerCard(obj.attributes, status)))
+
+}
+
+let createDiv = function(name, className=name){
     const newDiv = document.createElement("div")
     newDiv.id = name
     newDiv.className = className
     return newDiv
 }
 
-function createFlowerCard(obj) {
-    const flowersDiv = document.getElementById("flowers")
-    const newFlowerCard = createDiv(`${obj.name}-${obj.color}`, "flower-card")
-    const text = (`${obj.name}`)
-    const image = document.createElement("img")
+let createFlowerCard = function(obj, status) {
+    let newFlowerCard
+    if (status === "onlyWhiteCards") {
+        newFlowerCard = createDiv(`main-${obj.name}-card`, "main-flower-card")
+        let text = (`${obj.name}`)
+        newFlowerCard.textContent = text
+    }
+
+    else {
+        newFlowerCard = createDiv(`${obj.name} ${obj.color}`, "flower-card")
+    }
+    
+    let image = document.createElement("img")
     image.src = `./assets/images/${obj.image_url}`
-    image.height = 75
-    image.width = 75
-    newFlowerCard.textContent = text
+    image.height = 100
+    image.width = 100
+    
     newFlowerCard.appendChild(image)
-    flowersDiv.appendChild(newFlowerCard)
+
+    addFlowerToHeader(obj, newFlowerCard, status)
+    
 }
+
+
+let addFlowerToHeader = function (obj, card, status) {
+    let flowerSelectionHeader = document.getElementById("flower-selection")
+    if (status === "onlyWhiteCards") {
+        let expand = createDiv("button-container")
+        let btn = document.createElement('button')
+        btn.className = "open-close-button"
+
+
+        expand.addEventListener("click", function(){getFlowersByType(obj.name)})
+
+        flowerSelectionHeader.appendChild(card).appendChild(expand).appendChild(btn)
+    }
+    else {
+        let mainFlowerDiv = document.getElementById(`main-${obj.name}-card`)
+        let flowerSpecificDiv = document.getElementById(`${obj.name}`)
+        if (flowerSpecificDiv === null) {
+            flowerSpecificDiv = createDiv(obj.name, obj.name)
+        }
+
+        flowerSpecificDiv.appendChild(card)
+        mainFlowerDiv.appendChild(flowerSpecificDiv)
+    }
+
+
+}
+
+
+let addCardEvent = function(obj, card) {
+    console.log(card)
+    if (card.className === "main-flower-card") {
+        card.addEventListener("click", getFlowersByType(obj.name))
+    }
+}
+
+
+
+
 
