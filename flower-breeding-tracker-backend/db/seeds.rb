@@ -8,14 +8,19 @@
 
 # flower_names = ["Rose", "Lily", "Windflower", "Pansy", "Tulip", "Mum", "Hyacinth", "Cosmo"]
 
-Dir.entries(Pathname('../flower-breeding-tracker-frontend/src/images')).each do |file|
-    binding.pry
+Dir.entries(Pathname('../flower-breeding-tracker-frontend/assets/images')).each do |file|
     if file[0] != "."
         file_arr = file.split(/[-_]/)
-        
         name = file_arr[2].capitalize.singularize
         color = file_arr[1].capitalize.singularize
-        origin = "Seed"
+        origin = ""
+        if ["White", "Red", "Yellow"].include?(color)
+
+            origin = "Seed"
+        else 
+            origin = "Hybrid" 
+        end
+
         image_url = file
         new_flower = Flower.create(name: name, color: color, origin: origin, image_url: image_url)
 
