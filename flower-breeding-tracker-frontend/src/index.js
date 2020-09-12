@@ -25,7 +25,7 @@ let getFlowersByType = function(event, flowerType, status="allCards") {
 
     fetch(FLOWERS_URL, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.filter(obj => obj.attributes.name === flowerType && obj.attributes.color !== "White")).then(filteredResponse => filteredResponse.forEach(obj => createFlowerCard(obj.attributes, status)))
 
-    event.target.addEventListener("click", function () { removeFlowerDiv(event, flowerType) }, { once: true })
+    event.target.addEventListener("click", function (e) { removeFlowerDiv(e, flowerType) }, { once: true })
 }
 
 let getWhiteFlowers = function(status="onlyWhiteCards") {
@@ -88,7 +88,7 @@ let addFlowerToHeader = function (obj, card, status) {
         let mainFlowerDiv = document.getElementById(`main-${obj.name}-card`)
         let flowerSpecificDiv = document.getElementById(`${obj.name}`)
         if (flowerSpecificDiv === null) {
-            flowerSpecificDiv = createDiv(obj.name, obj.name)
+            flowerSpecificDiv = createDiv(obj.name, "all-colors")
         }
 
         flowerSpecificDiv.appendChild(card)
