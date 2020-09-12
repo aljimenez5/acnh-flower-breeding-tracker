@@ -12,8 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-let getFlowersByType = function(flowerType, status="allCards") {
-    
+let getFlowersByType = function(event, flowerType, status="allCards") {
+    console.log(event)
+    console.log(event.target)
     const requestConfigs = {
         method: 'GET',
         headers: {
@@ -23,6 +24,8 @@ let getFlowersByType = function(flowerType, status="allCards") {
     }
 
     fetch(FLOWERS_URL, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.filter(obj => obj.attributes.name === flowerType && obj.attributes.color !== "White")).then(filteredResponse => filteredResponse.forEach(obj => createFlowerCard(obj.attributes, status)))
+
+    event.target.addEventListener("click", function () { removeFlowerDiv(event, flowerType) }, { once: true })
 }
 
 let getWhiteFlowers = function(status="onlyWhiteCards") {
@@ -77,7 +80,7 @@ let addFlowerToHeader = function (obj, card, status) {
         btn.className = "open-close-button"
 
 
-        expand.addEventListener("click", function(){getFlowersByType(obj.name)})
+        expand.addEventListener("click", function(event){getFlowersByType(event, obj.name)}, {once: true})
 
         flowerSelectionHeader.appendChild(card).appendChild(expand).appendChild(btn)
     }
@@ -95,15 +98,11 @@ let addFlowerToHeader = function (obj, card, status) {
 
 }
 
-
-let addCardEvent = function(obj, card) {
-    console.log(card)
-    if (card.className === "main-flower-card") {
-        card.addEventListener("click", getFlowersByType(obj.name))
-    }
+let removeFlowerDiv = function (event, flower) {
+    let flowerDiv = document.getElementById(flower)
+    flowerDiv.remove()
+    event.target.addEventListener("click", function(e){
+        getFlowersByType(e, flower)
+    }, {once: true})
 }
-
-
-
-
 

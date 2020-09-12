@@ -16,7 +16,7 @@ body {
     padding: .5em;
     text-align: center;
     font-weight: bold;
-    background-color: snow;
+    background-color: skyblue;
 
 }
 
@@ -30,7 +30,7 @@ body {
 }
 
 .button-container {
-    background-color: snow;
+    background-color: skyblue;
     padding-bottom: 1em;
     
 }
