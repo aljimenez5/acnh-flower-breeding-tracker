@@ -4,13 +4,6 @@ const LANDS_URL = `${BACKEND_URL}/lands`
 const SQUARES_URL = `${BACKEND_URL}/squares`
 
 
-document.addEventListener('DOMContentLoaded', () => {
-
-    
-    getWhiteFlowers()
-    
-
-})
 
 let getFlowersByType = function(event, flowerType, status="allCards") {
     console.log(event)
@@ -106,3 +99,61 @@ let removeFlowerDiv = function (event, flower) {
     }, {once: true})
 }
 
+let createLandDiv = function(){
+    let createLand = document.getElementById("create-div")
+
+    let createForm = document.createElement("FORM")
+
+    let amountInDropdowns = [2, 3, 4, 5, 6]
+
+    let textInputOne = document.createElement("input")
+    textInputOne.type = "text"
+    textInputOne.name = "Name"
+    textInputOne.value = "Name"
+    let textInputTwo = document.createElement("input")
+    textInputTwo.type = "text"
+    textInputTwo.name = "Location"
+    textInputTwo.value = "Location"
+    let dropdownOne = document.createElement("select")
+    dropdownOne.name = "number_of_columns"
+    dropdownOne.id = "Columns"
+
+
+    let dropdownTwo = document.createElement("select")
+    dropdownTwo.name = "number_of_rows"
+    dropdownTwo.id = "Rows"
+    let submitButton = document.createElement("input")
+    submitButton.type = "submit"
+    submitButton.name = "submit"
+    submitButton.value = "Create Land Plot"
+
+    createForm.appendChild(textInputOne)
+    createForm.appendChild(textInputTwo)
+    createForm.appendChild(dropdownOne)
+    createForm.appendChild(dropdownTwo)
+
+    for (let amount of amountInDropdowns) {
+        let selectDiv = document.createElement("option")
+        selectDiv.value = `${amount} Columns`
+        selectDiv.text = `${amount} Columns`
+        let selectDivTwo = document.createElement("option")
+        selectDivTwo.value = `${amount} Rows`
+        selectDivTwo.text = `${amount} Rows`
+        dropdownOne.appendChild(selectDiv)
+        dropdownTwo.appendChild(selectDivTwo)
+    }
+
+
+    
+    createForm.appendChild(submitButton)
+    createLand.appendChild(createForm)
+
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    createLandDiv()
+    getWhiteFlowers()
+
+
+})

@@ -4,6 +4,10 @@ body {
     
 }
 
+form {
+    text-align: center;
+    padding: 2em;
+}
 
 #flower-selection {
     background-color: skyblue;
