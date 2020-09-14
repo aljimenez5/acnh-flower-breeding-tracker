@@ -4,7 +4,7 @@ body {
     background-color:rgb(125, 172, 116);
     background-position: top;
     font-family: verdana;
-    color: rgb(119, 102, 7);
+    color: rgba(55, 31, 18);
     
 }
 
@@ -13,7 +13,7 @@ form {
     text-align: center;
     padding: 2em;
     font-weight: bold;
-    color: rgb(119, 102, 7);
+    color: rgba(55, 31, 18);
 }
 
 
@@ -29,24 +29,38 @@ button, input, select, textarea {
     font-family: inherit;
     font-size: 100%;
     margin: .5em;
-}
 
+}
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
 #land-plot {
-    background-color: green;
+    margin-top: 10em;
+    background-color:rgb(125, 172, 116);
+    padding: 2em;
 }
 
-#land-plot-squares {
+.land-plot-squares {
     background-image: url(../assets/background/NH-Island_Designer-Dark_dirt_path.png);
+    height: 100px;
+    width: 100px;
+    padding: .5em;
 }
 
 #flower-selection {
-
     text-align: center;
     margin: 0;
     
 }
 
-.main-flower-card {
+#all-colors-selection {
+    text-align: center;
+    height: 150px;
+    width: 100%;
+}
+
+.main-flower-card, .selection-flower-card {
     display: inline-block;
     padding: .5em;
     text-align: center;
@@ -55,14 +69,14 @@ button, input, select, textarea {
 
 }
 
+.main-flower-card:hover {
 
-.open-close-button {
-    background-color: lightgray;
-    width: 3em;
+    color:white;
+    opacity: .7;
 }
-.open-close-button:hover {
-    background-color: #8B4513;
-}
+
+
+
 
 .button-container {
 
@@ -73,9 +87,9 @@ button, input, select, textarea {
     opacity: .7;
 }
 
-div > div.all-colors {
-    opacity: .7;
-}
+/* div > div.all-colors {
+
+} */
 
 img {
     display: block;
