@@ -1,6 +1,6 @@
 body {
     background-image: url(../assets/background/pkmn_pixel_background-2791.jpg);
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;;
     background-color:rgb(125, 172, 116);
     background-position: top;
     font-family: verdana;
@@ -36,7 +36,6 @@ table {
     margin-right: auto;
 }
 #land-plot {
-    margin-top: 10em;
     background-color:rgb(125, 172, 116);
     padding: 2em;
 }
@@ -56,16 +55,16 @@ table {
 
 #all-colors-selection {
     text-align: center;
-    height: 150px;
+    height: 100px;
     width: 100%;
 }
 
-.main-flower-card, .selection-flower-card {
+.main-flower-card {
     display: inline-block;
     padding: .5em;
     text-align: center;
     font-weight: bold;
-
+    margin-top: 12em;
 
 }
 
@@ -75,6 +74,12 @@ table {
     opacity: .7;
 }
 
+.selection-flower-card {
+    display: inline-block;
+    padding: .5em;
+    text-align: center;
+    font-weight: bold;
+}
 
 
 
