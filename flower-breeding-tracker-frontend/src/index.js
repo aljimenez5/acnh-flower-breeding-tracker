@@ -99,38 +99,22 @@ let removeFlowerDiv = function (event, flower) {
     }, {once: true})
 }
 
-let createLandDiv = function(){
-    let createLand = document.getElementById("create-div")
-
-    let createForm = document.createElement("FORM")
+let createLandForm = function(){
+    let selectColRowDiv = document.getElementById("column-row-select")
 
     let amountInDropdowns = [2, 3, 4, 5, 6]
 
-    let textInputOne = document.createElement("input")
-    textInputOne.type = "text"
-    textInputOne.name = "Name"
-    textInputOne.value = "Name"
-    let textInputTwo = document.createElement("input")
-    textInputTwo.type = "text"
-    textInputTwo.name = "Location"
-    textInputTwo.value = "Location"
     let dropdownOne = document.createElement("select")
     dropdownOne.name = "number_of_columns"
     dropdownOne.id = "Columns"
 
-
     let dropdownTwo = document.createElement("select")
     dropdownTwo.name = "number_of_rows"
     dropdownTwo.id = "Rows"
-    let submitButton = document.createElement("input")
-    submitButton.type = "submit"
-    submitButton.name = "submit"
-    submitButton.value = "Create Land Plot"
 
-    createForm.appendChild(textInputOne)
-    createForm.appendChild(textInputTwo)
-    createForm.appendChild(dropdownOne)
-    createForm.appendChild(dropdownTwo)
+
+    selectColRowDiv.appendChild(dropdownOne)
+    selectColRowDiv.appendChild(dropdownTwo)
 
     for (let amount of amountInDropdowns) {
         let selectDiv = document.createElement("option")
@@ -144,15 +128,11 @@ let createLandDiv = function(){
     }
 
 
-    
-    createForm.appendChild(submitButton)
-    createLand.appendChild(createForm)
-
 }
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    createLandDiv()
+    createLandForm()
     getWhiteFlowers()
 
 
