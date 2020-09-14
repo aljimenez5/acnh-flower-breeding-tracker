@@ -5,7 +5,7 @@ class SquaresController < ApplicationController
     end
 
     def show 
-        square = Square.find_by(id: params[:id])
+        square = Square.find_by(id: params["id"])
         render json: SquareSerializer.new(square)
     end
 

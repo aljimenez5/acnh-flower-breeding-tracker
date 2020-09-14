@@ -1,5 +1,5 @@
 class Square < ApplicationRecord
     belongs_to :land
-    has_one :flower, optional: true
+    has_one :flower
 
 end
