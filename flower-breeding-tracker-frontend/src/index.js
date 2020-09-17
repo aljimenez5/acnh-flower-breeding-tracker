@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createLandForm()
     getWhiteFlowers()
     getLandPlot()
-
+    getAllLandPlots()
 
 })
 
@@ -70,7 +70,7 @@ let getAllLandPlots = function() {
         }
     }
 
-    fetch(`${LANDS_URL}`, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.forEach(obj => displayLandPlot(obj)))
+    fetch(`${LANDS_URL}`, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.forEach(obj => landPlotIcon(obj)))
 }
 
 let getLandPlot = function(landObjID = 1) {
@@ -216,8 +216,17 @@ let landPlotIcon = function(obj) {
     let landSelection = document.getElementById("land-selection")
 
     let plotIcon = document.createElement("div")
-    plotIcon.id = obj.name 
+    plotIcon.id = "land-plot-icons" 
+    plotIcon.textContent = `${obj.attributes.name}`
     
+    let image = document.createElement("img")
+    image.src = "./assets/background/islandicon.jpeg"
+    image.id = "land-plot-icons-image"
+
+    image.addEventListener("click", function(e, obj){
+        displayLandPlot(obj)
+    })
+    landSelection.appendChild(plotIcon).appendChild(image)
 
 }
 
