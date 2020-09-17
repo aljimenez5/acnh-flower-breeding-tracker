@@ -4,6 +4,14 @@ const LANDS_URL = `${BACKEND_URL}/lands`
 const SQUARES_URL = `${BACKEND_URL}/squares`
 
 
+document.addEventListener('DOMContentLoaded', () => {
+
+    createLandForm()
+    getWhiteFlowers()
+    getLandPlot()
+
+
+})
 
 let getFlowersByType = function(event, flowerType, status="allCards") {
     
@@ -51,6 +59,18 @@ let getFlower = function(flowerObj, squareObj, status="squareFlower") {
     else {
         addEmptyPlotToSquare(squareObj)
     }
+}
+
+let getAllLandPlots = function() {
+    const requestConfigs = {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    }
+
+    fetch(`${LANDS_URL}`, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.forEach(obj => displayLandPlot(obj)))
 }
 
 let getLandPlot = function(landObjID = 1) {
@@ -126,15 +146,11 @@ let createFlowerCard = function(obj, status, otherObj= null) {
 let addFlowerToHeader = function (obj, card, status) {
     let flowerSelectionHeader = document.getElementById("flower-selection")
     if (status === "onlyWhiteCards") {
-        // let expand = createDiv("button-container")
-        // let btn = document.createElement('button')
-        // btn.className = "open-close-button"
-
 
         card.addEventListener("click", function(event){getFlowersByType(event, obj.name)}, {once: true})
 
         flowerSelectionHeader.appendChild(card)
-        // .appendChild(expand).appendChild(btn)
+
     }
     else {
 
@@ -194,6 +210,14 @@ let createLandForm = function(){
         dropdownTwo.appendChild(selectDivTwo)
     }
 
+}
+
+let landPlotIcon = function(obj) {
+    let landSelection = document.getElementById("land-selection")
+
+    let plotIcon = document.createElement("div")
+    plotIcon.id = obj.name 
+    
 
 }
 
@@ -201,12 +225,12 @@ let displayLandPlot = function(obj) {
     
     let landPlotBody = document.getElementById("land-plot-body")
 
+    let paragraph = document.getElementById("land-name-location-heading")
+    paragraph.textContent = `${obj.attributes.name} located at ${obj.attributes.location} plot`
+
     let numRows = obj.attributes.number_of_rows
     let numCols = obj.attributes.number_of_columns
 
-
-    let squaresInLand = obj.relationships.squares.data
-    console.log(squaresInLand)
 
     for (let i = 0; i < numRows; i++) {
         let tableRow = document.createElement("tr")
@@ -231,10 +255,6 @@ let displayLandPlot = function(obj) {
 
 
 let addFlowerToSquare = function (obj, newFlowerCard, status, squareObj) {
-    // console.log(obj)
-    console.log(newFlowerCard)
-
-    // console.log(squareObj.attributes)
 
     let flowerRow = squareObj.attributes.row_num
     let flowerCol = squareObj.attributes.column_num
@@ -251,11 +271,4 @@ let addEmptyPlotToSquare = function(squareObj) {
 
 }
 
-document.addEventListener('DOMContentLoaded', () => {
 
-    createLandForm()
-    getWhiteFlowers()
-    getLandPlot()
-
-
-})

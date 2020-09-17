@@ -37,7 +37,18 @@ table {
 }
 #land-plot {
     background-color:rgb(125, 172, 116);
-    padding: 2em;
+    padding: 1em;
+    text-align: center;
+    margin-top: 12em;
+}
+
+#land-name-location-heading {
+    padding: 1em;
+    font-weight: bold;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    
 }
 
 .land-plot-squares {
@@ -64,7 +75,7 @@ table {
     padding: .5em;
     text-align: center;
     font-weight: bold;
-    margin-top: 12em;
+    
 
 }
 
