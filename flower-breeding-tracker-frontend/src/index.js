@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     createLandForm()
     createDifferentDivs()
     getWhiteFlowers()
-    getLandPlot()
     getAllLandPlots()
 
 })
@@ -55,8 +54,7 @@ let createLandForm = function () {
     listItemLandLocation.id = "land_location"
     let listItemColRow = document.createElement("li")
     listItemColRow.id = "column_row_select" 
-    let listItemButton = document.createElement("li")
-    listItemButton.id = "submit_button"
+    let submitButton = document.createElement("button")
     
     let inputLandName = document.createElement("input")
     let inputLandLocation = document.createElement("input")
@@ -85,6 +83,11 @@ let createLandForm = function () {
         "innerHTML": "Land Location"
     })
 
+    Object.assign(submitButton, {
+        "id": "submit_button",
+        "innerHTML": "Create Land Plot"
+    })
+
 
     document.body.appendChild(landFormDiv).appendChild(unorderedList)
 
@@ -92,7 +95,7 @@ let createLandForm = function () {
 
     unorderedList.appendChild(listItemLandLocation).appendChild(locationLabel).appendChild(inputLandLocation)
 
-    unorderedList.append(listItemColRow, listItemButton)
+    unorderedList.append(listItemColRow, submitButton)
 
 
     let amountInDropdowns = [2, 3, 4, 5, 6]
@@ -216,9 +219,15 @@ let getLandPlot = function (landObjID = 1) {
 
 let displayLandPlot = function (obj) {
     
+    
+
     let landPlotBody = document.getElementById("land-plot-body")
 
     let paragraph = document.getElementById("land-name-location-heading")
+
+    landPlotBody.innerHTML = ""
+    paragraph.innerHTML = ""
+
     paragraph.textContent = `${obj.attributes.name} located at ${obj.attributes.location} plot`
 
     let numRows = obj.attributes.number_of_rows
@@ -295,16 +304,30 @@ let landPlotIcon = function (obj) {
     let landSelection = document.getElementById("land-selection")
 
     let plotIcon = document.createElement("div")
-    plotIcon.id = "land-plot-icons"
-    plotIcon.textContent = `${obj.attributes.name}`
+
+    let iconButton = document.createElement("input")
+    iconButton.type = "radio"
+
+    let iconLabel = document.createElement("label")
+    iconLabel.name = `${obj.attributes.name}_land_plot_icon`
+
+    Object.assign(plotIcon, {
+        "id": "land_plot_icon",
+        "name": `${obj.attributes.name}_land_plot_icon`
+    })
+
+    let paragraph = document.createElement("p")
+    paragraph.innerHTML = `${obj.attributes.name}`
 
     let image = document.createElement("img")
     image.src = "./assets/background/islandicon.jpeg"
-    image.id = "land-plot-icons-image"
+    image.id = "land-plot-icon-image"
 
-    image.addEventListener("click", function (e, obj) {
+    landSelection.appendChild(iconLabel).appendChild(plotIcon).append(paragraph, image, iconButton)
+
+    iconButton.addEventListener("click", function() {
         displayLandPlot(obj)
     })
-    landSelection.appendChild(plotIcon).appendChild(image)
+    
 
 }

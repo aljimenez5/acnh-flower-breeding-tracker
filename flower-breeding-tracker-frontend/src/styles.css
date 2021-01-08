@@ -8,10 +8,14 @@ body {
     
 }
 
+header {
+    padding: 2em;
+}
+
 
 #create-land-form {
     text-align: center;
-    padding: 1em;
+    padding: 3em;
     font-weight: bold;
     color: rgba(55, 31, 18);
 }
@@ -35,11 +39,18 @@ table {
     margin-left: auto;
     margin-right: auto;
 }
+
+#land-selection {
+    margin-top: 3.5em;
+    text-align: center;
+}
+
 #land-plot {
     background-color:rgb(125, 172, 116);
     padding: 1em;
     text-align: center;
-    margin-top: 8em;
+    margin-top: 1em;
+    margin-bottom: 2em;
 }
 
 #land-name-location-heading {
@@ -53,19 +64,29 @@ table {
 
 .land-plot-squares {
     background-image: url(../assets/background/NH-Island_Designer-Dark_dirt_path.png);
+    padding: .5em;
     height: 100px;
     width: 100px;
-    padding: .5em;
 }
 
-
-#land-plot-icons {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+#land_plot_icon {
     font-weight: bold;
+    display: inline-block;
+    padding: .5em;
+    opacity: .7;
 }
-#land-plot-icons-image {
+#land_plot_icon:hover, #land_plot_icon:focus-within {
+    opacity: 1;
+    
+}
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+
+
+#land-plot-icon-image {
     height: 100px;
     width: 125px;
 } 
@@ -80,6 +101,7 @@ table {
     text-align: center;
     height: 100px;
     width: 100%;
+    padding-bottom: 2em;
 }
 
 .main-flower-card {
