@@ -9,9 +9,9 @@ body {
 }
 
 
-form {
+#create-land-form {
     text-align: center;
-    padding: 2em;
+    padding: 1em;
     font-weight: bold;
     color: rgba(55, 31, 18);
 }
@@ -57,6 +57,7 @@ table {
     width: 100px;
     padding: .5em;
 }
+
 
 #land-plot-icons {
     margin-left: auto;
