@@ -1,21 +1,24 @@
 body {
-    background-image: url(../assets/background/pkmn_pixel_background-2791.jpg);
-    background-repeat: repeat-x;;
+    background-image: url(../assets/background/acnhphoto.jpg), url(../assets/background/grass.png);
+    background-repeat: no-repeat;
     background-color:rgb(125, 172, 116);
     background-position: top;
+    background-size: auto, 100% 100%;
     font-family: verdana;
     color: rgba(55, 31, 18);
     
 }
 
 header {
-    padding: 2em;
+    padding: 1em;
+    display: inline-block;
 }
 
 
 #create-land-form {
     text-align: center;
     padding: 3em;
+    margin-top: 12em;
     font-weight: bold;
     color: rgba(55, 31, 18);
 }
@@ -45,15 +48,21 @@ table {
     text-align: center;
 }
 
-#land-plot {
-    background-color:rgb(125, 172, 116);
-    padding: 1em;
+#land-plots-div {
+    display: flex;
     text-align: center;
-    margin-top: 1em;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
-#land-name-location-heading {
+
+#land-plot, #land-plot-two {
+    flex: 1;
+    width: 50%;
+    height: 100%;
+    margin: 15px;
+}
+
+#land-name-location-heading, #land-name-location-heading-two {
     padding: 1em;
     font-weight: bold;
     width: 50%;
@@ -64,10 +73,18 @@ table {
 
 .land-plot-squares {
     background-image: url(../assets/background/NH-Island_Designer-Dark_dirt_path.png);
-    padding: .5em;
+
     height: 100px;
     width: 100px;
 }
+
+.land-plot-squares-two {
+    background-image: url(../assets/background/grass-square.jpg);
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
 
 #land_plot_icon {
     font-weight: bold;
@@ -93,16 +110,23 @@ input[type="radio"] {
 
 #flower-selection {
     text-align: center;
-    margin: 0;
+    
     
 }
 
 #all-colors-selection {
     text-align: center;
     height: 100px;
-    width: 100%;
-    padding-bottom: 2em;
 }
+
+#flower-color-card {
+    display: inline-block;
+    text-align: center;
+    padding: .5em;
+
+}
+
+
 
 .main-flower-card {
     display: inline-block;
@@ -113,8 +137,7 @@ input[type="radio"] {
 
 }
 
-.main-flower-card:hover {
-
+#flower-color-card:hover, .main-flower-card:hover {
     color:white;
     opacity: .7;
 }
@@ -137,9 +160,10 @@ input[type="radio"] {
     opacity: .7;
 }
 
-/* div > div.all-colors {
-
-} */
+p {
+    font-weight: bold;
+    font-size: large;
+}
 
 img {
     display: block;
