@@ -1,14 +1,30 @@
 const BACKEND_URL = 'http://localhost:3000'
+const STATIC_FLOWERS_URL = `${BACKEND_URL}/static_flowers`
 const FLOWERS_URL = `${BACKEND_URL}/flowers`
 const LANDS_URL = `${BACKEND_URL}/lands`
 const SQUARES_URL = `${BACKEND_URL}/squares`
 
+class Flower {
+    constructor(name, color, image_url) {
+        this.name = name
+        this.color = color
+        this.image_url = image_url
+    }
+}
+
+class Land {
+    constructor(name, location, number_of_columns, number_of_rows) {
+        this.name = name
+        this.location = location
+        this.number_of_columns = number_of_columns
+        this.number_of_rows = number_of_rows
+    }
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
-
     createLandForm()
     createDifferentDivs()
-    displayTwoEmptyPlots()
     getAllWhiteFlowers()
     getAllLandPlots()
 
@@ -70,41 +86,51 @@ let createDifferentDivs = function() {
 
 let createLandForm = function () {
     let landFormDiv = createDiv("create-land-form")
-    let unorderedList = document.createElement("ul")
+    let form = document.createElement("form")
+    let div = document.createElement("div")
+    let div2 = document.createElement("div")
+    let div3 = document.createElement("div")
+    let div4 = document.createElement("div")
+
+    form.action = `${LANDS_URL}`
+    form.method = "POST"
     
-    let listItemLandName = document.createElement("li") 
+    let listItemLandName = document.createElement("label") 
     listItemLandName.id = "land_name"
-    let listItemLandLocation = document.createElement("li") 
+    let listItemLandLocation = document.createElement("label") 
     listItemLandLocation.id = "land_location"
-    let listItemColRow = document.createElement("li")
+    let listItemColRow = document.createElement("label")
     listItemColRow.id = "column_row_select" 
-    let submitButton = document.createElement("button")
-    
+
+
     let inputLandName = document.createElement("input")
     let inputLandLocation = document.createElement("input")
     let nameLabel = document.createElement("label")
     let locationLabel = document.createElement("label")
+    let submitButton = document.createElement("button")
+    
+    
 
     Object.assign(inputLandName, {
         "type": "text",
         "id": "land_name",
-        "name": "land_name"
+        "name": "name"
     })
 
     Object.assign(inputLandLocation, {
         "type": "text",
         "id": "land_location",
-        "name": "land_location"
+        "name": "location"
     })
 
     Object.assign(nameLabel, {
-        "id": "land_name",
-        "innerHTML": "Land Name"
+        "innerHTML": "Land Name",
+        "htmlFor": "land_name"
     })
 
     Object.assign(locationLabel, {
-        "id": "land_location",
-        "innerHTML": "Land Location"
+        "innerHTML": "Land Location",
+        "htmlFor": "land_location"
     })
 
     Object.assign(submitButton, {
@@ -113,14 +139,17 @@ let createLandForm = function () {
     })
 
 
-    document.body.appendChild(landFormDiv).appendChild(unorderedList)
+    document.body.appendChild(landFormDiv).appendChild(form)
 
-    unorderedList.appendChild(listItemLandName).appendChild(nameLabel).appendChild(inputLandName)
+    form.appendChild(div).append(nameLabel, inputLandName)
 
-    unorderedList.appendChild(listItemLandLocation).appendChild(locationLabel).appendChild(inputLandLocation)
+    form.appendChild(div2).append(locationLabel, inputLandLocation)
 
-    unorderedList.append(listItemColRow, submitButton)
+    form.appendChild(div3).appendChild(listItemColRow)
 
+    form.appendChild(div4).appendChild(submitButton)
+
+    form.addEventListener("submit", submitLandPlot)
 
     let amountInDropdowns = [2, 3, 4]
 
@@ -138,10 +167,10 @@ let createLandForm = function () {
 
     for (let amount of amountInDropdowns) {
         let selectDiv = document.createElement("option")
-        selectDiv.value = `${amount} Columns`
+        selectDiv.value = `${amount}`
         selectDiv.text = `${amount} Columns`
         let selectDivTwo = document.createElement("option")
-        selectDivTwo.value = `${amount} Rows`
+        selectDivTwo.value = `${amount}`
         selectDivTwo.text = `${amount} Rows`
         dropdownOne.appendChild(selectDiv)
         dropdownTwo.appendChild(selectDivTwo)
@@ -149,7 +178,26 @@ let createLandForm = function () {
 
 }
 
+let submitLandPlot = function(ev) {
+    ev.preventDefault()
+    let formData = new FormData(ev.target)
+    console.log(formData.getAll())
+    const requestConfigs = {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(obj)
+    }
+
+    fetch(LANDS_URL, requestConfigs).then(response => response.json()).then(function(obj) {
+        console.log(obj)
+    })
+}
+
 let getAllWhiteFlowers = function (status = "allWhiteCards") {
+    
     const requestConfigs = {
         method: 'GET',
         headers: {
@@ -158,11 +206,18 @@ let getAllWhiteFlowers = function (status = "allWhiteCards") {
         }
     }
 
-    fetch(FLOWERS_URL, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.filter(obj => obj.attributes.color === "White")).then(filteredResponse => filteredResponse.forEach(obj => createFlowerCard(obj, status)))
+    fetch(STATIC_FLOWERS_URL, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.filter(obj => obj.attributes.color === "White")).then(filteredResponse => filteredResponse.forEach(
+        
+        function(obj) {
+            let jsObj = new Flower(obj.attributes.name, obj.attributes.color, obj.attributes.image_url)
+            createFlowerCard(jsObj, status)
+        }
+        
+        ))
 
 }
 
-let getFlowersByType = function (event, flowerType, status="allCards") {
+let getFlowersByType = function (flowerType, status="allCards") {
     let flowerDiv = document.getElementById("all-colors-selection")
     flowerDiv.innerHTML = ""
     
@@ -175,14 +230,18 @@ let getFlowersByType = function (event, flowerType, status="allCards") {
         }
     }
 
-    fetch(FLOWERS_URL, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.filter(obj => obj.attributes.name === flowerType)).then(filteredResponse => filteredResponse.forEach(obj => createFlowerCard(obj, status)))
+    fetch(STATIC_FLOWERS_URL, requestConfigs).then(response => response.json()).then(parsedResponse => parsedResponse.data.filter(obj => obj.attributes.name === flowerType)).then(filteredResponse => filteredResponse.forEach(
+        function(obj){
+            let jsObj = new Flower(obj.attributes.name, obj.attributes.color, obj.attributes.image_url)
+            createFlowerCard(jsObj, status)
+        }
+    ))
 
     
 }
 
-let createFlowerCard = function (obj, status) {
+let createFlowerCard = function (newObj, status) {
     let newFlowerCard
-    let newObj = obj.attributes
     
     if (status === "allWhiteCards") {
         newFlowerCard = createDiv(`${newObj.name}-card`, "main-flower-card")
@@ -192,11 +251,12 @@ let createFlowerCard = function (obj, status) {
         let image = createImageElement(newObj)
         newFlowerCard.appendChild(image)
 
+        newFlowerCard.addEventListener("click", function () { getFlowersByType(newObj.name) })
+
         let flowerSelectionHeader = document.getElementById("flower-selection")
 
         flowerSelectionHeader.appendChild(newFlowerCard)
         
-        newFlowerCard.addEventListener("click", function (event) { getFlowersByType(event, newObj.name)})
     }
 
     else if (status === "allCards") {
@@ -204,21 +264,30 @@ let createFlowerCard = function (obj, status) {
         newFlowerCard = createDiv("flower-color-card", `${newObj.color}-${newObj.name}`)
         let image = createImageElement(newObj)
         newFlowerCard.appendChild(image)
-        
+        newFlowerCard.draggable = true
+        newFlowerCard.addEventListener("dragstart", dragFunction)
         document.getElementById("all-colors-selection").appendChild(newFlowerCard)
 
     }
 
     else {
-        let flowerObj = newObj.flower
+        let flowerObj = newObj
         newFlowerCard = createDiv(`${flowerObj.name} ${flowerObj.color}`, "flower-card")
         let image = createImageElement(flowerObj)
         newFlowerCard.appendChild(image)
+        newFlowerCard.draggable = true
+        newFlowerCard.addEventListener("dragstart", dragFunction)
         addFlowerToSquare(newFlowerCard, newObj)
     }
 }
 
+let dragFunction = function(e) {
+    console.log(e)
+    e.dataTransfer.effectAllowed = "copy"
+    let flowerObj = new Flower()
+    // on drag start create it as a new object (save when added to a square)
 
+}
 
 let getLandPlot = function (landObjID = 1) {
     const requestConfigs = {
@@ -234,35 +303,26 @@ let getLandPlot = function (landObjID = 1) {
 
 
 
-let displayTwoEmptyPlots = function(){
-    let landPlotBody = document.getElementById("land-plot-body")
-    let landPlotBodyTwo = document.getElementById("land-plot-body-two")
-    
+let displayPlotHolder = function(){
+    let landPlotBody = document.getElementById("land-plot-body-two")
     
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
         let tableRow = document.createElement("tr")
-        let tableRowTwo = document.createElement("tr")
         tableRow.id = i + 1
-        tableRowTwo.id = i + 1
         landPlotBody.appendChild(tableRow)
-        landPlotBodyTwo.appendChild(tableRowTwo)
 
-        for (let ii = 0; ii < 4; ii++) {
+        for (let ii = 0; ii < 2; ii++) {
             let tableCol = document.createElement("td")
-            let tableColTwo = document.createElement("td")
             tableCol.id = ii + 1
-            tableColTwo.id = ii + 1
-            tableCol.className = "land-plot-squares"
-            tableColTwo.className = "land-plot-squares-two"
+            tableCol.className = "land-plot-squares-two"
             tableRow.appendChild(tableCol)
-            tableRowTwo.appendChild(tableColTwo)
         }
     }
 }
 
 let displayLandPlot = function (obj) {
-    
+    displayPlotHolder()
     let landPlotBody = document.getElementById("land-plot-body")
 
     let paragraph = document.getElementById("land-name-location-heading")
@@ -324,7 +384,7 @@ let getFlower = function (flowerObj, squareObj, status = "squareFlower") {
 }
 
 let addFlowerToSquare = function (newFlowerCard, squareObj) {
-
+    console.log(newFlowerCard)
     let flowerRow = squareObj.row_num
     let flowerCol = squareObj.column_num
 
