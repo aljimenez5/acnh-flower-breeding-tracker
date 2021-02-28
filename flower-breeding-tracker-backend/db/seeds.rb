@@ -13,16 +13,8 @@ Dir.entries(Pathname('../flower-breeding-tracker-frontend/assets/images')).each 
         file_arr = file.split(/[-_]/)
         name = file_arr[2].capitalize.singularize
         color = file_arr[1].capitalize.singularize
-        origin = ""
-        if ["White", "Red", "Yellow"].include?(color)
-
-            origin = "Seed"
-        else 
-            origin = "Hybrid" 
-        end
-
         image_url = file
-        new_flower = Flower.create(name: name, color: color, origin: origin, image_url: image_url)
+        new_flower = StaticFlower.create(name: name, color: color, image_url: image_url)
 
     end
 
